@@ -1,7 +1,9 @@
 const nodemailer = require('nodemailer');
 const twilio = require('twilio');
 
-const twilioClient = twilio("ACbefe5de30fb2c00d705bc6b0cbbb5f5f", "83872f82bcc8845b1b29105229e91615");
+const {twilioAuthKey, twilioPassKey} = require('../data/constants')
+
+const twilioClient = twilio(twilioAuthKey, twilioPassKey);
 const TWILIO_PHONE = "+12489636787";
 
 function generateOTP() {
