@@ -2,7 +2,8 @@
   "users":[
   {
     "id":"Card123444",
-    "name": "Vyshnavi",
+    "firstName": "Vyshnavi",
+    "lastName":"Kottamasu",
     "email": "kvyshnavi.98@gmail.com",
     "phone": "9502560681",
     "dob": "1999-05-10",
@@ -12,7 +13,8 @@
   },
    {
     "id":"Card123456",
-    "name": "Sahitya G",
+    "firstName": "Sahitya",
+    "lastName":"G",
     "phone": "8408883452",
     "dob": "1999-10-10",
     "country": "United Kingdom",
@@ -21,17 +23,16 @@
   },
   {
     "id":"Card123457",
-    "name": "Sahitya G",
+    "firstName": "Sahitya",
+    "lastName":"G",
     "email": "kvyshnavi.98@gmail.com",
-    "dob": "1999-10-10",
-    "country": "United Kingdom",
-    "city": "London",
-    "state": "Greater London"
+    "dob": "1999-10-12",
+    "country": "India"
   },
   {
     "id":"038250668",
-    "name": "Jane Smith",
-    "email": "vyshnavi98.k@gmail.com"
+    "firstName": "Jane Smith",
+    "email": "kvyshnavi.98@gmail.com"
   }
 ]
 }
