@@ -19,29 +19,19 @@ async function sendOTP(email, phone, otp) {
     subject: 'Your OTP Code',
     text: `Your OTP is ${otp}`,
   });
-
-  console.log(`📧 OTP sent to ${email}`);
-  console.log(`📱 OTP would also be sent to phone: ${phone} (SMS integration needed)`);
 }
 
-const maskEmail = (email) =>{
+function maskEmail(email) {
   const [user, domain] = email.split('@');
-  if(user.length <= 2)
-    {
-      return '*'.repeat(user.length)+ '@' + domain;
-    } 
-
-    const first = user[0].toUpperCase();
-    const last = user.length > 4 ? user.slice(-2) : user.slice(-1);
-    const masked =  '*'.repeat(user.length - first.length + last.length);
-
-    return `${first}${masked}@${domain}`;
-
+  if (user.length <= 2) return '*'.repeat(user.length) + '@' + domain;
+  const first = user[0];
+  const last = user.slice(-2);
+  const masked = '*'.repeat(user.length - 3);
+  return `${first}${masked}${last}@${domain}`;
 }
 
-const maskPhone = (phone) =>{
-  phone.replace(/.(?=.{2})/g, '*')
+function maskPhone(phone) {
+  return phone.replace(/.(?=.{2})/g, '*');
 }
-
 
 module.exports = { generateOTP, sendOTP, maskEmail, maskPhone };
