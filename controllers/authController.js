@@ -9,33 +9,34 @@ const data = require('../data/usersData.json')
 let otpStore = {}; // Temporary in-memory store
 
 const sendOtpHandler = async (req, res) => {
-    const { cardNumber, imgSrc } = req.body;
-    const user = data.users.find(data=> data.id == cardNumber);
-    console.log(user);
-    if(!imgSrc) return res.status(404).json({ success: false, message: 'Face Scan not found' });
-    if (!user) return res.status(404).json({ success: false, message: 'Card not found' });
-   
-    // Extract base64 data img & refactor2: move to separate file to readFile function
-    const base64Data = imgSrc.replace(/^data:image\/\w+;base64,/, "");
-    const filePath = path.join(__dirname, '..','uploads', `screenshot_${Date.now()}.jpg`);
-    fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+    const { cardNumber, imgSrc = '' } = req.body;
+    const user = data.users.find(data => data.id == cardNumber);
 
-    console.log("Received photo length", imgSrc.length);// TODO: read image
+    if (!imgSrc) return res.status(404).json({ success: false, message: 'Face Scan not found' });
+    if (!user) return res.status(404).json({ success: false, message: 'Card not found' });
+
+    // Extract base64 data img & refactor2: move to separate file to readFile function
+    if (imgSrc.length > 1) {
+        const base64Data = imgSrc.replace(/^data:image\/\w+;base64,/, "");
+        const filePath = path.join(__dirname, '..', 'uploads', `screenshot_${Date.now()}.jpg`);
+        fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+    }
+
+  
     const otp = generateOTP();
 
-    otpStore[cardNumber] = { otp, timestamp: Date.now() , user};
-    console.log(`[DEV-ONLY OTP] for ${cardNumber}:`, otp); // remove in production
+    otpStore[cardNumber] = { otp, timestamp: Date.now(), user };
     await sendOTP(user.email, user.phone, otp);
 
     res.json({
         success: true,
         message: 'OTP sent to email and phone.',
-        maskedMail: maskEmail(user.email),
+        maskedMail: maskEmail(user.email) || '',
         maskedPhone: maskPhone(user.phone || ''),
         userData: user
     });
 
-    
+
 };
 
 const verifyOtpAndFetchData = (req, res) => {
@@ -55,8 +56,8 @@ const verifyOtpAndFetchData = (req, res) => {
 
     const maskedUser = {
         ...user,
-        email: maskEmail(user.email),
-        phone: maskPhone(user.phone)
+        email: maskEmail(user.email) || '',
+        phone: maskPhone(user.phone) || ''
     };
 
     return res.json({ success: true, token, data: maskedUser });
