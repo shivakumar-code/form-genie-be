@@ -14,7 +14,8 @@ RUN npm install --omit=dev
 COPY . .
 
 # Expose port (default 5000, can be overridden by env)
-EXPOSE 5000
+ENV PORT=8080
+EXPOSE 8080
 
 # Set environment variables
 ENV NODE_ENV=production

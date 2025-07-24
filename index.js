@@ -17,5 +17,5 @@ app.options('*', cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use('/api/auth', authRoutes);
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
