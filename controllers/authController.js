@@ -12,8 +12,8 @@ const sendOtpHandler = async (req, res) => {
     const { cardNumber, imgSrc = '' } = req.body;
     const user = data.users.find(data => data.id == cardNumber);
 
-    if (!imgSrc) return res.status(404).json({ success: false, message: 'Face Scan not found' });
-    if (!user) return res.status(404).json({ success: false, message: 'Card not found' });
+    if (!imgSrc) return res.status(404).json({ success: false, message: 'Face Scan not found, Please capture a photo' });
+    if (!user) return res.status(404).json({ success: false, message: 'Card not found, Please enter the valid Number' });
 
     // Extract base64 data img & refactor2: move to separate file to readFile function
     if (imgSrc.length > 1) {
