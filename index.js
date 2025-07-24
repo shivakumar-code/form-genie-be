@@ -6,7 +6,14 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://form-genie-fe-475414324273.europe-west1.run.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
+
+
 app.use(bodyParser.json());
 
 app.use('/api/auth', authRoutes);
