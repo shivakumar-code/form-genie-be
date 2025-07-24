@@ -31,17 +31,23 @@ const maskEmail = (email) =>{
       return '*'.repeat(user.length)+ '@' + domain;
     } 
 
-    const first = user[0].toUpperCase();
-    const last = user.length > 4 ? user.slice(-2) : user.slice(-1);
-    const masked =  '*'.repeat(user.length - first.length + last.length);
-
-    return `${first}${masked}@${domain}`;
+  const firstTwo = user.slice(0, 2);
+  const lastTwo = user.slice(-2);
+  const masked = "*".repeat(user.length - 4);
+  return `${firstTwo}${masked}${lastTwo}@${domain}`;
 
 }
 
-const maskPhone = (phone) =>{
-  phone.replace(/.(?=.{2})/g, '*')
-}
+const maskPhone = (phoneNumber) =>{
+   if (!phoneNumber || phoneNumber.length < 10) {
+    return 'Invalid phone number';
+  }
 
+  const countryCode = '+91';
+  const firstFour = phoneNumber.slice(0, 4);
+  const masked = 'X'.repeat(6);
+
+  return `${countryCode} ${firstFour}-${masked}`;
+}
 
 module.exports = { generateOTP, sendOTP, maskEmail, maskPhone };
