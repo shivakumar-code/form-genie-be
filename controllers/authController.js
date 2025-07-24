@@ -7,7 +7,6 @@ let otpStore = {}; // Temporary in-memory store
 const sendOtpHandler = async (req, res) => {
     const { cardNumber } = req.body;
     const user = getUserByCardNumber(cardNumber);
-    console.log(user)
     if (!user) return res.status(404).json({ success: false, message: 'Card not found' });
 
     const otp = generateOTP();
@@ -19,14 +18,16 @@ const sendOtpHandler = async (req, res) => {
         success: true,
         message: 'OTP sent to email and phone.',
         maskedMail: maskEmail(user.email),
-        maskedPhone: maskPhone(user.phone || '')
+        maskedPhone: maskPhone(user.phone || ''),
+        userData: user
     });
+
+    
 };
 
 const verifyOtpAndFetchData = (req, res) => {
     const { cardNumber, otp } = req.body;
     const record = otpStore[cardNumber];
-    console.log(otpStore)
     const user = getUserByCardNumber(cardNumber);
 
     if (!record || record.otp !== otp) {

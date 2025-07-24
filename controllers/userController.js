@@ -15,7 +15,6 @@ const getUserById = (req, res) => {
 
     try {
       const users = JSON.parse(jsonData).users;
-      console.log("users",users)
       const user = users.find(u => u.id === id);
 
       if (!user) {
