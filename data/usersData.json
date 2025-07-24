@@ -1,0 +1,19 @@
+{
+  "users":[
+  {
+    "id":"123",
+    "name": "John Doe",
+    "email": "kvyshnavi.98@gmail.com",
+    "phone": "9502560681",
+    "dob": "1999-10-10",
+    "country": "United Kingdom",
+    "city": "London",
+    "state": "Greater London"
+  },
+  {
+    "id":"456",
+    "name": "Jane Smith",
+    "email": "jane@example.com"
+  }
+]
+}
