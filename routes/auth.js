@@ -8,9 +8,9 @@ const { sendOtpHandler, verifyOtpAndFetchData } = require('../controllers/authCo
 const corsOptions = {
   origin: 'https://form-genie-fe-475414324273.europe-west1.run.app',
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
+
 const app = express();  
 app.use(cors({
   origin: 'https://form-genie-fe-475414324273.europe-west1.run.app', // frontend URL
