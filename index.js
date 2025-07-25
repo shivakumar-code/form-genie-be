@@ -8,7 +8,8 @@ const app = express();
 // ✅ Allow frontend origin
 app.use(cors({
   origin: 'https://form-genie-fe-475414324273.europe-west1.run.app',
-  methods: ['GET', 'POST', 'OPTIONS']
+  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true
 }));
 
 app.use(bodyParser.json());
