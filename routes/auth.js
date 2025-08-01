@@ -1,19 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const { sendOtpHandler, verifyOtpAndFetchData } = require('../controllers/authController');
+const multer = require("multer");
 
-// Setup multer for file uploads
+const {
+  sendOtpHandler,
+  verifyOtpAndFetchData,
+} = require("../controllers/authController");
+
 const storage = multer.diskStorage({
-  destination: './uploads',
+  destination: "./uploads",
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
+    cb(null, Date.now() + file.originalname);
+  },
 });
 const upload = multer({ storage });
-
-// 🔒 No need to use cors() here again
-router.post('/send-otp', upload.single('file'), sendOtpHandler);
-router.post('/verify-otp', verifyOtpAndFetchData);
+router.post("/send-otp", upload.single("file"), sendOtpHandler);
+router.post("/verify-otp", verifyOtpAndFetchData);
 
 module.exports = router;
