@@ -4,6 +4,7 @@ const path = require('path');
 const userDataPath = path.join(__dirname, '../data/usersData.json');
 
 function getUserByCardNumber(cardNumber) {
+  
  try {
     const rawData = fs.readFileSync(userDataPath, 'utf8');
     const parsed = JSON.parse(rawData);

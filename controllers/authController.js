@@ -9,7 +9,7 @@ const data = require('../data/usersData.json')
 let otpStore = {}; // Temporary in-memory store
 
 const sendOtpHandler = async (req, res) => {
-    const { cardNumber, imgSrc = '' } = req.body;
+    let { cardNumber, imgSrc = '' } = req.body;
     const user = data.users.find(data => data.id == cardNumber);
 
     if (!imgSrc) return res.status(404).json({ success: false, message: 'Face Scan not found, Please capture a photo' });
@@ -22,9 +22,11 @@ const sendOtpHandler = async (req, res) => {
         fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
     }
 
-  
-    const otp = generateOTP();
 
+    const otp = generateOTP();
+//     if (typeof cardNumber !== 'string') {
+//   cardNumber = String(cardNumber);
+// }
     otpStore[cardNumber] = { otp, timestamp: Date.now(), user };
     await sendOTP(user.email, user.phone, otp);
 
@@ -40,9 +42,23 @@ const sendOtpHandler = async (req, res) => {
 };
 
 const verifyOtpAndFetchData = (req, res) => {
-    const { cardNumber, otp } = req.body;
-    const record = otpStore[cardNumber];
+    let { cardNumber, otp } = req.body;
+//     if (typeof cardNumber !== 'string') {
+//   cardNumber = String(cardNumber);
+// }
+    if(cardNumber?.length >10 ){
+        const match = cardNumber.match(/\b\d{9}\b/);
+
+        if (match) {
+        cardNumber = match[0];
+        console.log("Passport number:", match[0]);
+        } else {
+        console.log("Passport number not found.");
+        }
+    }
+    let record = otpStore[cardNumber];
     const user = getUserByCardNumber(cardNumber);
+    console.log(otpStore)
 
     if (!record || record.otp !== otp) {
         return res.status(401).json({ success: false, message: 'Invalid OTP' });
